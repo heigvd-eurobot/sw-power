@@ -5,7 +5,7 @@ Software for the power board
 --[I2C] 
 
     Micro en slave, PI en master, programmation des commandes de communication avec priorité
-    Communication avec la battier Mavic DJI
+    Communication avec la batterie Mavic DJI
     https://github.com/czipis/mavic-mini-battery-info/blob/master/mavic-mini-battery-info.ino
 
 --[Interface]
