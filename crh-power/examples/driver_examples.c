@@ -10,24 +10,36 @@
 #include "driver_init.h"
 #include "utils.h"
 
+static struct io_descriptor *io;
+
+static void I2C_0_rx_complete(const struct i2c_s_async_descriptor *const descr)
+{
+	uint8_t c;
+
+	io_read(io, &c, 1);
+}
+
 void I2C_0_example(void)
 {
-	struct io_descriptor *I2C_0_io;
+	i2c_s_async_get_io_descriptor(&I2C_0, &io);
+	i2c_s_async_register_callback(&I2C_0, I2C_S_RX_COMPLETE, I2C_0_rx_complete);
+	i2c_s_async_enable(&I2C_0);
+}
 
-	i2c_m_sync_get_io_descriptor(&I2C_0, &I2C_0_io);
-	i2c_m_sync_enable(&I2C_0);
-	i2c_m_sync_set_slaveaddr(&I2C_0, 0x12, I2C_M_SEVEN);
-	io_write(I2C_0_io, (uint8_t *)"Hello World!", 12);
+static struct io_descriptor *io;
+
+static void I2C_1_rx_complete(const struct i2c_s_async_descriptor *const descr)
+{
+	uint8_t c;
+
+	io_read(io, &c, 1);
 }
 
 void I2C_1_example(void)
 {
-	struct io_descriptor *I2C_1_io;
-
-	i2c_m_sync_get_io_descriptor(&I2C_1, &I2C_1_io);
-	i2c_m_sync_enable(&I2C_1);
-	i2c_m_sync_set_slaveaddr(&I2C_1, 0x12, I2C_M_SEVEN);
-	io_write(I2C_1_io, (uint8_t *)"Hello World!", 12);
+	i2c_s_async_get_io_descriptor(&I2C_1, &io);
+	i2c_s_async_register_callback(&I2C_1, I2C_S_RX_COMPLETE, I2C_1_rx_complete);
+	i2c_s_async_enable(&I2C_1);
 }
 
 static struct timer_task TIMER_0_task1, TIMER_0_task2;
@@ -36,12 +48,10 @@ static struct timer_task TIMER_0_task1, TIMER_0_task2;
  */
 static void TIMER_0_task1_cb(const struct timer_task *const timer_task)
 {
-	gpio_toggle_pin_level(USER1);
 }
 
 static void TIMER_0_task2_cb(const struct timer_task *const timer_task)
 {
-	gpio_toggle_pin_level(USER2);
 }
 
 void TIMER_0_example(void)

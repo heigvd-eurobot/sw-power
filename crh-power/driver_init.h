@@ -21,23 +21,27 @@ extern "C" {
 #include <hal_io.h>
 #include <hal_sleep.h>
 
-#include <hal_i2c_m_sync.h>
+#include <hal_i2c_s_async.h>
 
-#include <hal_i2c_m_sync.h>
+#include <hal_i2c_s_async.h>
 #include <hal_timer.h>
 
-extern struct i2c_m_sync_desc I2C_0;
+#define SERCOM0_I2CS_BUFFER_SIZE 16
 
-extern struct i2c_m_sync_desc  I2C_1;
-extern struct timer_descriptor TIMER_0;
+#define SERCOM1_I2CS_BUFFER_SIZE 16
 
+extern struct i2c_s_async_descriptor I2C_0;
+
+extern struct i2c_s_async_descriptor I2C_1;
+extern struct timer_descriptor       TIMER_0;
+
+void I2C_0_PORT_init(void);
 void I2C_0_CLOCK_init(void);
 void I2C_0_init(void);
-void I2C_0_PORT_init(void);
 
+void I2C_1_PORT_init(void);
 void I2C_1_CLOCK_init(void);
 void I2C_1_init(void);
-void I2C_1_PORT_init(void);
 
 /**
  * \brief Perform system initialization, initialize pins and clocks for

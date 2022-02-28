@@ -17,9 +17,11 @@
 
 struct timer_descriptor TIMER_0;
 
-struct i2c_m_sync_desc I2C_0;
+struct i2c_s_async_descriptor I2C_0;
+uint8_t                       SERCOM0_i2c_s_buffer[SERCOM0_I2CS_BUFFER_SIZE];
 
-struct i2c_m_sync_desc I2C_1;
+struct i2c_s_async_descriptor I2C_1;
+uint8_t                       SERCOM1_i2c_s_buffer[SERCOM1_I2CS_BUFFER_SIZE];
 
 void I2C_0_PORT_init(void)
 {
@@ -55,7 +57,7 @@ void I2C_0_CLOCK_init(void)
 void I2C_0_init(void)
 {
 	I2C_0_CLOCK_init();
-	i2c_m_sync_init(&I2C_0, SERCOM0);
+	i2c_s_async_init(&I2C_0, SERCOM0, SERCOM0_i2c_s_buffer, SERCOM0_I2CS_BUFFER_SIZE);
 	I2C_0_PORT_init();
 }
 
@@ -93,7 +95,7 @@ void I2C_1_CLOCK_init(void)
 void I2C_1_init(void)
 {
 	I2C_1_CLOCK_init();
-	i2c_m_sync_init(&I2C_1, SERCOM1);
+	i2c_s_async_init(&I2C_1, SERCOM1, SERCOM1_i2c_s_buffer, SERCOM1_I2CS_BUFFER_SIZE);
 	I2C_1_PORT_init();
 }
 

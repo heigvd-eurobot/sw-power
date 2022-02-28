@@ -152,18 +152,18 @@ drivers:
         configuration: {}
   I2C_0:
     user_label: I2C_0
-    definition: Atmel:SAMD20_Drivers:0.0.1::SAMD20E14A-MN::SERCOM0::driver_config_definition::I2C.Master.Standard~2FFast-mode::HAL:Driver:I2C.Master.Sync
+    definition: Atmel:SAMD20_Drivers:0.0.1::SAMD20E14A-MN::SERCOM0::driver_config_definition::I2C.Slave.Standard~2FFast-mode::HAL:Driver:I2C.Slave.Async
     functionality: I2C
-    api: HAL:Driver:I2C_Master_Sync
+    api: HAL:Driver:I2C_Slave_Async
     configuration:
-      i2c_master_advanced: false
-      i2c_master_arch_dbgstop: Keep running
-      i2c_master_arch_inactout: Disabled
-      i2c_master_arch_lowtout: false
-      i2c_master_arch_runstdby: false
-      i2c_master_arch_sdahold: 300-600ns hold time
-      i2c_master_arch_trise: 215
-      i2c_master_baud_rate: 100000
+      i2c_slave_address: 165
+      i2c_slave_address_mask: 0
+      i2c_slave_advanced: false
+      i2c_slave_amode: Mask
+      i2c_slave_gencen: false
+      i2c_slave_lowtout: false
+      i2c_slave_runstdby: false
+      i2c_slave_sdahold: 300-600ns hold time
     optional_signals: []
     variant:
       specification: SDA=0, SCL=1
@@ -190,18 +190,18 @@ drivers:
           slow_gclk_selection: Generic clock generator 3
   I2C_1:
     user_label: I2C_1
-    definition: Atmel:SAMD20_Drivers:0.0.1::SAMD20E14A-MN::SERCOM1::driver_config_definition::I2C.Master.Standard~2FFast-mode::HAL:Driver:I2C.Master.Sync
+    definition: Atmel:SAMD20_Drivers:0.0.1::SAMD20E14A-MN::SERCOM1::driver_config_definition::I2C.Slave.Standard~2FFast-mode::HAL:Driver:I2C.Slave.Async
     functionality: I2C
-    api: HAL:Driver:I2C_Master_Sync
+    api: HAL:Driver:I2C_Slave_Async
     configuration:
-      i2c_master_advanced: false
-      i2c_master_arch_dbgstop: Keep running
-      i2c_master_arch_inactout: Disabled
-      i2c_master_arch_lowtout: false
-      i2c_master_arch_runstdby: false
-      i2c_master_arch_sdahold: 300-600ns hold time
-      i2c_master_arch_trise: 215
-      i2c_master_baud_rate: 100000
+      i2c_slave_address: 164
+      i2c_slave_address_mask: 0
+      i2c_slave_advanced: false
+      i2c_slave_amode: Mask
+      i2c_slave_gencen: false
+      i2c_slave_lowtout: false
+      i2c_slave_runstdby: false
+      i2c_slave_sdahold: 300-600ns hold time
     optional_signals: []
     variant:
       specification: SDA=0, SCL=1
@@ -269,7 +269,7 @@ drivers:
       RESERVED_InputFreq_id: Generic clock generator 3
       _$freq_output_8MHz Internal Oscillator (OSC8M): 1000000
       _$freq_output_Digital Frequency Locked Loop (DFLL48M): 48000000
-      _$freq_output_External Crystal Oscillator 0.4-32MHz (XOSC): '400000'
+      _$freq_output_External Crystal Oscillator 0.4-32MHz (XOSC): 400000
       dfll48m_arch_calibration: false
       dfll48m_arch_ccdis: false
       dfll48m_arch_coarse: 31

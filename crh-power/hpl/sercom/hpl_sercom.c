@@ -138,6 +138,10 @@ static struct usart_configuration _usarts[] = {
 };
 #endif
 
+static struct _i2c_s_async_device *_sercom0_dev = NULL;
+
+static struct _i2c_s_async_device *_sercom1_dev = NULL;
+
 static uint8_t     _get_sercom_index(const void *const hw);
 static uint8_t     _sercom_get_irq_num(const void *const hw);
 static void        _sercom_init_irq_param(const void *const hw, void *dev);
@@ -1055,6 +1059,14 @@ static uint8_t _sercom_get_irq_num(const void *const hw)
  */
 static void _sercom_init_irq_param(const void *const hw, void *dev)
 {
+
+	if (hw == SERCOM0) {
+		_sercom0_dev = (struct _i2c_s_async_device *)dev;
+	}
+
+	if (hw == SERCOM1) {
+		_sercom1_dev = (struct _i2c_s_async_device *)dev;
+	}
 }
 
 /**
@@ -1796,6 +1808,50 @@ int32_t _i2c_s_async_set_irq_state(struct _i2c_s_async_device *const device, con
 	}
 
 	return ERR_NONE;
+}
+
+/**
+ * \internal Sercom i2c slave interrupt handler
+ *
+ * \param[in] p The pointer to i2c slave device
+ */
+static void _sercom_i2c_s_irq_handler(struct _i2c_s_async_device *device)
+{
+	void *   hw    = device->hw;
+	uint32_t flags = hri_sercomi2cs_read_INTFLAG_reg(hw);
+
+	if (flags & SERCOM_I2CS_INTFLAG_AMATCH) {
+		hri_sercomi2cs_clear_INTFLAG_AMATCH_bit(hw);
+	}
+	if (flags & SERCOM_I2CS_INTFLAG_PREC) {
+		hri_sercomi2cs_clear_INTFLAG_PREC_bit(hw);
+	}
+	if (flags & SERCOM_I2CS_INTFLAG_DRDY) {
+		if (!hri_sercomi2cs_get_STATUS_DIR_bit(hw)) {
+			ASSERT(device->cb.rx_done);
+			device->cb.rx_done(device, hri_sercomi2cs_read_DATA_reg(hw));
+		} else {
+			ASSERT(device->cb.tx);
+			device->cb.tx(device);
+		}
+		hri_sercomi2cs_clear_INTFLAG_DRDY_bit(hw);
+	}
+}
+
+/**
+ * \internal Sercom i2c slave interrupt handler
+ */
+void SERCOM0_Handler(void)
+{
+	_sercom_i2c_s_irq_handler(_sercom0_dev);
+}
+
+/**
+ * \internal Sercom i2c slave interrupt handler
+ */
+void SERCOM1_Handler(void)
+{
+	_sercom_i2c_s_irq_handler(_sercom1_dev);
 }
 
 /**
