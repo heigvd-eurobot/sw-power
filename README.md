@@ -2,11 +2,11 @@
 Software for the power board
 
 
-Les commandes i2c sont exactements les mêmes pour les deux robots. 
+I2C commands are the same for the two robots.
 
 #Commandes I2C
 
-Registre      Description         Format    Read/w    Default     Human
+|Registre |     Description   |      Format |   Read/w |   Default|     Human|
 
 Micro :
 
