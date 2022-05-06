@@ -156,7 +156,20 @@ void system_init(void)
 	gpio_set_pin_direction(USER2, GPIO_DIRECTION_OUT);
 
 	gpio_set_pin_function(USER2, GPIO_PIN_FUNCTION_OFF);
+// GPIO on PA10
 
+// Set pin direction to input
+gpio_set_pin_direction(eSTOP, GPIO_DIRECTION_IN);
+
+gpio_set_pin_pull_mode(eSTOP,
+// <y> Pull configuration
+// <id> pad_pull_config
+// <GPIO_PULL_OFF"> Off
+// <GPIO_PULL_UP"> Pull-up
+// <GPIO_PULL_DOWN"> Pull-down
+GPIO_PULL_UP);
+
+gpio_set_pin_function(eSTOP, GPIO_PIN_FUNCTION_OFF);
 	// GPIO on PA11
 
 	// Set pin direction to input
