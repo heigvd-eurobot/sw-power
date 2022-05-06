@@ -4,7 +4,7 @@ Software for the power board
 
 I2C commands are the same for the two robots.
 
-#Commandes I2C
+###Commandes I2C
 
 
 | Registre | Description | Format | Read/w | Default | Human |
@@ -20,7 +20,18 @@ I2C commands are the same for the two robots.
 
 							
 						
-  #Documentation
+  ###Documentation
+  
+  https://github.com/o-gs/dji-firmware-tools/issues/196
+  https://github.com/o-gs/dji-firmware-tools/blob/master/comm_sbs_chips/BQ40z307.py
+  
+  DJI example code : https://github.com/czipis/mavic-mini-battery-info/blob/master/mavic-mini-battery-info.ino
+  
+  LTC datasheet : https://www.analog.com/media/en/technical-documentation/data-sheets/ltc3886-3886-1.pdf
+  
+  ###I2C 
+  
+  Two bus, an extern one which can be connected through QWIIC connectors and an intern one which connects the DJI battery and the LTC. On the new power board, we can directly be connected from the exterior to the intern bus.
   
   
   
